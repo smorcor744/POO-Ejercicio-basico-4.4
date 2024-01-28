@@ -17,5 +17,26 @@ Intenta instanciar y modificar con el número de caballos con un valor inferior 
 Intenta instanciar y modificar con el número de puertas con un valor inferior a 3 o superior a 5 y comprueba que no es posible.
 Intenta instanciar y modificar con la matrícula con un valor que no tenga 7 caracteres y comprueba que no es posible.
 Intenta instanciar y modificar con el color, el número de caballos, el número de puertas y la matrícula con valores nulos/blancos y comprueba que no es posible.*/
-class Coche {
+class Coche(var color: String, marca: String, modelo: String, numCaballos: Int, numPuertas: Int, matricula: String) {
+    var marca: String = marca.capitalize()
+    var modelo: String = modelo.capitalize()
+    var numCaballos: Int = numCaballos
+        set(value) {
+            require(value in 70..700){"El número de caballos debe estar entre 70 y 700"}
+            field = value
+        }
+    var numPuertas: Int = numPuertas
+        set(value) {
+            require(value in 3..5){"El número de puertas debe estar entre 3 y 5"}
+            field = value
+        }
+    var matricula: String = matricula
+        set(value) {
+            require(value.length == 7) {"La mátricula tiene que ser de 7 caracteres."}
+            field = value
+        }
+    override fun toString(): String {
+        return "Coche(color=$color, marca=$marca, modelo=$modelo, numCaballos=$numCaballos, numPuertas=$numPuertas, matricula=$matricula)"
+    }
+
 }
