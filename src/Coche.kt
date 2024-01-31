@@ -1,3 +1,5 @@
+import java.util.*
+
 /**Crear una clase Coche, a través de la cual se pueda conocer el color del coche, la marca, el modelo, el número de caballos, el número de puertas y la matrícula. Crear el constructor del coche, así como el método toString().
 
 Marca y modelo no podrán ser blancos ni nulos y no podrán modificarse.
@@ -17,26 +19,43 @@ Intenta instanciar y modificar con el número de caballos con un valor inferior 
 Intenta instanciar y modificar con el número de puertas con un valor inferior a 3 o superior a 5 y comprueba que no es posible.
 Intenta instanciar y modificar con la matrícula con un valor que no tenga 7 caracteres y comprueba que no es posible.
 Intenta instanciar y modificar con el color, el número de caballos, el número de puertas y la matrícula con valores nulos/blancos y comprueba que no es posible.*/
-class Coche(var color: String, marca: String, modelo: String, numCaballos: Int, numPuertas: Int, matricula: String) {
-    var marca: String = marca.capitalize()
-    var modelo: String = modelo.capitalize()
+class Coche(color: String, marca: String, modelo: String, numCaballos: Int, numPuertas: Int, matricula: String) {
+    var color: String = color
+        set(value) {
+            require(value.isNotBlank()) {"El color no puede ser nulo o blanco"}
+            field = value
+        }
+
+    val marca: String = marca.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        .also {
+            require(it.isNotBlank()) {"La marca no puede ser nula o blanca"}
+        }
+
+    val modelo: String = modelo.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+        .also {
+            require(it.isNotBlank()) {"El modelo no puede ser nulo o blanco"}
+        }
+
     var numCaballos: Int = numCaballos
         set(value) {
             require(value in 70..700){"El número de caballos debe estar entre 70 y 700"}
             field = value
         }
+
     var numPuertas: Int = numPuertas
         set(value) {
             require(value in 3..5){"El número de puertas debe estar entre 3 y 5"}
             field = value
         }
+
     var matricula: String = matricula
         set(value) {
-            require(value.length == 7) {"La mátricula tiene que ser de 7 caracteres."}
+            require(value.length == 7) {"La matrícula tiene que ser de 7 caracteres"}
             field = value
         }
-    override fun toString(): String {
-        return "Coche(color=$color, marca=$marca, modelo=$modelo, numCaballos=$numCaballos, numPuertas=$numPuertas, matricula=$matricula)"
-    }
+
+    override fun toString() = "Coche(color=$color, marca=$marca, modelo=$modelo, numCaballos=$numCaballos, numPuertas=$numPuertas, matricula=$matricula)"
 
 }
+
+
